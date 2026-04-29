@@ -1,0 +1,9 @@
+services:
+  app:
+    build:
+      context: gameweb
+      dockerfile: Dockerfile
+    container_name: spring_mvc_app
+    restart: always
+    ports:
+      - "9090:8080"

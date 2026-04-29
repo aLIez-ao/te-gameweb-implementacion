@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Detalle: ' + ${juego.nombre}">Detalle</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2rem; }
+        .back { margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+    <div class="back"><a href="/portal/">← Volver al catálogo</a></div>
+
+    <h1 th:text="${juego.nombre}">Nombre del juego</h1>
+    <p><strong>Descripción:</strong> <span th:text="${juego.descripcion}"></span></p>
+    <p><strong>Género:</strong>      <span th:text="${juego.genero}"></span></p>
+</body>
+</html>

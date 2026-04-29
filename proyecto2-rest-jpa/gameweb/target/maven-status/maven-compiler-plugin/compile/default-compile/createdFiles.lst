@@ -1,0 +1,5 @@
+ico\gameweb\repositorio\JuegoRepository.class
+ico\gameweb\modelo\Juego.class
+ico\gameweb\controladores\JuegoController.class
+ico\gameweb\GamewebApplication.class
+ico\gameweb\DataLoader.class

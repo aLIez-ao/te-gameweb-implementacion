@@ -1,0 +1,42 @@
+services:
+
+  # ─── Base de datos MySQL ───────────────────────────────────────────────────
+  db:
+    image: mysql:8.4
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root1234
+      MYSQL_DATABASE:      gameweb_db
+      MYSQL_USER:          gameuser
+      MYSQL_PASSWORD:      game1234
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql          # Persistencia de datos
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot1234"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─── Aplicación Spring Boot ────────────────────────────────────────────────
+  app:
+    build:
+      context: gameweb
+      dockerfile: Dockerfile
+    container_name: spring_rest_app
+    restart: always
+    ports:
+      - "9090:8080"
+    environment:
+      # Sobreescribe application.properties desde variables de entorno
+      SPRING_DATASOURCE_URL:      jdbc:mysql://db:3306/gameweb_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: gameuser
+      SPRING_DATASOURCE_PASSWORD: game1234
+    depends_on:
+      db:
+        condition: service_healthy   # App espera a que MySQL esté listo
+
+volumes:
+  mysql_data:
